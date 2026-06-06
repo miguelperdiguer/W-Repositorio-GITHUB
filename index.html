@@ -23,7 +23,7 @@
 
     .container {
       width: 100%;
-      max-width: 620px;
+      max-width: 920px;
     }
 
     h1 {
@@ -261,6 +261,148 @@
       font-size: 2.5rem;
       margin-bottom: 10px;
     }
+
+    /* --- API Playground --- */
+    .api-card {
+      margin-top: 28px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 3px 10px rgba(15, 23, 42, 0.05);
+    }
+
+    .api-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #0f172a;
+    }
+
+    .api-subtitle {
+      font-size: 0.84rem;
+      color: #64748b;
+      margin-bottom: 16px;
+    }
+
+    .api-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .api-box {
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 12px;
+      background: #f8fafc;
+    }
+
+    .api-box h3 {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #64748b;
+      margin-bottom: 8px;
+    }
+
+    .api-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .api-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .api-row input,
+    .api-row textarea {
+      width: 100%;
+      padding: 9px 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-family: inherit;
+      background: #fff;
+      outline: none;
+    }
+
+    .api-row textarea {
+      resize: vertical;
+      min-height: 72px;
+    }
+
+    .api-row input:focus,
+    .api-row textarea:focus {
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1);
+    }
+
+    .btn-api {
+      border: none;
+      border-radius: 8px;
+      padding: 9px 12px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      color: #fff;
+      background: #334155;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-api:hover {
+      background: #1e293b;
+    }
+
+    .btn-api.get { background: #0284c7; }
+    .btn-api.get:hover { background: #0369a1; }
+    .btn-api.post { background: #16a34a; }
+    .btn-api.post:hover { background: #15803d; }
+    .btn-api.put { background: #d97706; }
+    .btn-api.put:hover { background: #b45309; }
+    .btn-api.delete { background: #dc2626; }
+    .btn-api.delete:hover { background: #b91c1c; }
+
+    .api-status {
+      margin-top: 2px;
+      margin-bottom: 10px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #64748b;
+      min-height: 18px;
+    }
+
+    .api-status.success {
+      color: #15803d;
+    }
+
+    .api-status.error {
+      color: #b91c1c;
+    }
+
+    .api-response {
+      width: 100%;
+      min-height: 220px;
+      border-radius: 10px;
+      border: 1px solid #cbd5e1;
+      background: #0f172a;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, 'Courier New', monospace;
+      font-size: 0.82rem;
+      padding: 12px;
+      white-space: pre-wrap;
+      overflow: auto;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 860px) {
+      .api-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
@@ -306,9 +448,69 @@
         </li>
       </ul>
     </section>
+
+    <section class="api-card">
+      <h2 class="api-title">Playground API · JSONPlaceholder</h2>
+      <p class="api-subtitle">Pruebas rápidas de llamadas GET, POST, PUT y DELETE contra https://jsonplaceholder.typicode.com</p>
+
+      <div class="api-grid">
+        <div class="api-box">
+          <h3>GET</h3>
+          <div class="api-row">
+            <button type="button" class="btn-api get" id="btn-get-todos">GET /todos (5)</button>
+            <button type="button" class="btn-api get" id="btn-get-post">GET /posts/:id</button>
+          </div>
+          <div class="api-row">
+            <input id="get-post-id" type="number" min="1" max="100" value="1" placeholder="ID del post" />
+          </div>
+        </div>
+
+        <div class="api-box">
+          <h3>DELETE</h3>
+          <div class="api-row">
+            <input id="delete-post-id" type="number" min="1" max="100" value="1" placeholder="ID del post" />
+            <button type="button" class="btn-api delete" id="btn-delete-post">DELETE /posts/:id</button>
+          </div>
+        </div>
+
+        <div class="api-box">
+          <h3>POST</h3>
+          <div class="api-row">
+            <input id="post-title" type="text" value="Nuevo post de prueba" placeholder="Titulo" />
+          </div>
+          <div class="api-row">
+            <textarea id="post-body" placeholder="Contenido">Este contenido se envia a JSONPlaceholder para practicar peticiones POST.</textarea>
+          </div>
+          <div class="api-row">
+            <button type="button" class="btn-api post" id="btn-create-post">POST /posts</button>
+          </div>
+        </div>
+
+        <div class="api-box">
+          <h3>PUT</h3>
+          <div class="api-row">
+            <input id="put-post-id" type="number" min="1" max="100" value="1" placeholder="ID del post" />
+          </div>
+          <div class="api-row">
+            <input id="put-title" type="text" value="Post actualizado" placeholder="Nuevo titulo" />
+          </div>
+          <div class="api-row">
+            <textarea id="put-body" placeholder="Nuevo contenido">Contenido actualizado mediante PUT de ejemplo.</textarea>
+          </div>
+          <div class="api-row">
+            <button type="button" class="btn-api put" id="btn-update-post">PUT /posts/:id</button>
+          </div>
+        </div>
+      </div>
+
+      <p class="api-status" id="api-status">Esperando una llamada...</p>
+      <pre class="api-response" id="api-response">{\n  "info": "Aqui veras la respuesta de la API"\n}</pre>
+    </section>
   </div>
 
   <script>
+    const API_BASE = 'https://jsonplaceholder.typicode.com';
+
     const form          = document.getElementById('task-form');
     const input         = document.getElementById('task-input');
     const pendingList   = document.getElementById('pending-list');
@@ -319,6 +521,22 @@
     const emptyCompleted = document.getElementById('empty-completed');
     const toggleBtn     = document.getElementById('toggle-btn');
     const completedSection = document.getElementById('completed-section');
+    const apiStatus = document.getElementById('api-status');
+    const apiResponse = document.getElementById('api-response');
+
+    const btnGetTodos = document.getElementById('btn-get-todos');
+    const btnGetPost = document.getElementById('btn-get-post');
+    const btnCreatePost = document.getElementById('btn-create-post');
+    const btnUpdatePost = document.getElementById('btn-update-post');
+    const btnDeletePost = document.getElementById('btn-delete-post');
+
+    const getPostIdInput = document.getElementById('get-post-id');
+    const deletePostIdInput = document.getElementById('delete-post-id');
+    const putPostIdInput = document.getElementById('put-post-id');
+    const postTitleInput = document.getElementById('post-title');
+    const postBodyInput = document.getElementById('post-body');
+    const putTitleInput = document.getElementById('put-title');
+    const putBodyInput = document.getElementById('put-body');
 
     let tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
 
@@ -418,6 +636,56 @@
       localStorage.setItem('tasks', JSON.stringify(tasks));
     }
 
+    async function callApi(url, options = {}, label = 'Llamada API') {
+      setApiStatus(`Ejecutando ${label}...`, '');
+
+      try {
+        const response = await fetch(url, options);
+        const payload = await safeJsonParse(response);
+
+        const result = {
+          request: {
+            method: options.method || 'GET',
+            url,
+            body: options.body ? JSON.parse(options.body) : null
+          },
+          response: {
+            ok: response.ok,
+            status: response.status,
+            statusText: response.statusText,
+            data: payload
+          }
+        };
+
+        showApiResponse(result);
+        setApiStatus(`${label} completada (HTTP ${response.status})`, response.ok ? 'success' : 'error');
+      } catch (error) {
+        setApiStatus(`${label} fallida: ${error.message}`, 'error');
+        showApiResponse({ error: error.message });
+      }
+    }
+
+    function setApiStatus(message, type) {
+      apiStatus.textContent = message;
+      apiStatus.classList.remove('success', 'error');
+      if (type) apiStatus.classList.add(type);
+    }
+
+    function showApiResponse(data) {
+      apiResponse.textContent = JSON.stringify(data, null, 2);
+    }
+
+    async function safeJsonParse(response) {
+      const text = await response.text();
+      if (!text) return null;
+
+      try {
+        return JSON.parse(text);
+      } catch {
+        return text;
+      }
+    }
+
     function escapeHtml(str) {
       return str
         .replace(/&/g, '&amp;')
@@ -426,6 +694,52 @@
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#039;');
     }
+
+    btnGetTodos.addEventListener('click', () => {
+      callApi(`${API_BASE}/todos?_limit=5`, {}, 'GET /todos?_limit=5');
+    });
+
+    btnGetPost.addEventListener('click', () => {
+      const id = Number(getPostIdInput.value) || 1;
+      callApi(`${API_BASE}/posts/${id}`, {}, `GET /posts/${id}`);
+    });
+
+    btnCreatePost.addEventListener('click', () => {
+      const body = {
+        title: postTitleInput.value.trim() || 'Sin titulo',
+        body: postBodyInput.value.trim() || 'Sin contenido',
+        userId: 1
+      };
+
+      callApi(`${API_BASE}/posts`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json; charset=UTF-8' },
+        body: JSON.stringify(body)
+      }, 'POST /posts');
+    });
+
+    btnUpdatePost.addEventListener('click', () => {
+      const id = Number(putPostIdInput.value) || 1;
+      const body = {
+        id,
+        title: putTitleInput.value.trim() || 'Sin titulo',
+        body: putBodyInput.value.trim() || 'Sin contenido',
+        userId: 1
+      };
+
+      callApi(`${API_BASE}/posts/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json; charset=UTF-8' },
+        body: JSON.stringify(body)
+      }, `PUT /posts/${id}`);
+    });
+
+    btnDeletePost.addEventListener('click', () => {
+      const id = Number(deletePostIdInput.value) || 1;
+      callApi(`${API_BASE}/posts/${id}`, {
+        method: 'DELETE'
+      }, `DELETE /posts/${id}`);
+    });
 
     // Carga inicial
     renderAll();
